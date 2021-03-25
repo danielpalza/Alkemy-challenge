@@ -1,9 +1,19 @@
 import { Fragment, useState, useEffect } from "react";
 import Fetch from "../services/Fetch";
 
+import Details from "./Details";
+import Delete from "./Delete";
+import Edit from "./Edit";
+
 function Home() {
+  //Is the json data that has come in the fetch
   const [data, setData] = useState([]);
+  // Contains the data convert to components of react ready to show
   const [rows, setRows] = useState([]);
+  // Is the post who has been selected to do a operation.
+  const [post, setPost] = useState();
+  // It controlles what component has to be showed
+  const [compRender, setCompRender] = useState("HOME");
 
   //Fetch the array of json data of post's
   useEffect(() => {
@@ -13,11 +23,21 @@ function Home() {
       .catch("Error");
   }, []);
 
+  const loadPost = (comp, post) => {
+    console.log("post", comp, post)
+  setCompRender(comp);
+  setPost(post);
+};
+
   //Creates the row of the post, showing only the titles
   useEffect(() => {
     if (data.length > 0) {
       setRows(
         data.map((a) => {
+          // Receives if a diferent component has to be showed, and load the post to use
+         
+          
+
           return (
             <li
               key={a.id}
@@ -26,14 +46,23 @@ function Home() {
               <h2 className=" text-xl p-2 font-sans">
                 {firstLetterUpperCase(a.title)}
               </h2>
-              <div >
-                <button className="bg-yellow-400 justify-center rounded-md text-xl m-1 p-2 font-sans">
+              <div>
+                <button
+                  onClick={()=>loadPost("DETAILS", a)}
+                  className="bg-yellow-400 justify-center rounded-md text-xl m-1 p-2 font-sans"
+                >
                   Detalles
                 </button>
-                <button className="bg-yellow-400 justify-center rounded-md text-xl m-1 p-2 font-sans">
+                <button
+                  onClick={()=>loadPost("EDIT", a)}
+                  className="bg-yellow-400 justify-center rounded-md text-xl m-1 p-2 font-sans"
+                >
                   Editar
                 </button>
-                <button className="bg-red-600 justify-center rounded-md text-xl m-1 p-2 font-sans">
+                <button
+                  onClick={()=>loadPost("DELETE", a)}
+                  className="bg-red-600 justify-center rounded-md text-xl m-1 p-2 font-sans"
+                >
                   Eliminar
                 </button>
               </div>
@@ -44,6 +73,7 @@ function Home() {
     }
   }, [data]);
 
+  //Convert the first letter to upper case
   const firstLetterUpperCase = (str) =>
     str.charAt(0).toUpperCase().concat(str.substring(1, str.length));
 
@@ -53,15 +83,25 @@ function Home() {
         <h1>Home</h1>
       </header>
       <main className="justify-center items-center p-2 font-sans">
-        <ul>
-          {rows.length > 0 ? (
-            rows.map((a) => a)
-          ) : (
-            <li className="justify-center items-center bg-yellow-500 text-lg p-2 font-sans">
-              <h2>Without post for now ...</h2>
-            </li>
-          )}
-        </ul>
+        {compRender === "HOME" ? (
+          <ul>
+            {rows.length > 0 ? (
+              rows.map((a) => a)
+            ) : (
+              <li className="justify-center items-center bg-yellow-500 text-lg p-2 font-sans">
+                <h2>Without post for now ...</h2>
+              </li>
+            )}
+          </ul>
+        ) : compRender === "DETAILS" ? (
+          <Details firstLetterUpperCase={firstLetterUpperCase} setCompRender={setCompRender} post={post} />
+        ) : compRender === "EDIT" ? (
+          <Edit firstLetterUpperCase={firstLetterUpperCase} setCompRender={setCompRender} post={post} />
+        ) : compRender === "DELETE" ? (
+          <Delete firstLetterUpperCase={firstLetterUpperCase} setCompRender={setCompRender} post={post} />
+        ) : (
+          ""
+        )}
       </main>
     </Fragment>
   );
