@@ -4,6 +4,7 @@ import Fetch from "../services/Fetch";
 import Details from "./Details";
 import Delete from "./Delete";
 import Edit from "./Edit";
+import Add from "./Add";
 
 function Home() {
   //Is the json data that has come in the fetch
@@ -23,22 +24,18 @@ function Home() {
       .catch("Error");
   }, []);
 
+  // Receives if a diferent component has to be showed, and load the post to use
   const loadPost = (comp, post) => {
-    console.log("post", comp, post)
-  setCompRender(comp);
-  setPost(post);
-};
+    setCompRender(comp);
+    setPost(post);
+  };
 
   //Creates the row of the post, showing only the titles
   useEffect(() => {
     if (data.length > 0) {
       setRows(
         data.map((a) => {
-          // Receives if a diferent component has to be showed, and load the post to use
-         
-          
-
-          return (
+         return (
             <li
               key={a.id}
               className="flex flex-col justify-between md:flex-row bg-yellow-300 justify-center rounded-md items-center m-3 p-2 shadow-md font-sans "
@@ -48,19 +45,19 @@ function Home() {
               </h2>
               <div>
                 <button
-                  onClick={()=>loadPost("DETAILS", a)}
+                  onClick={() => loadPost("DETAILS", a)}
                   className="bg-yellow-400 justify-center rounded-md text-xl m-1 p-2 font-sans"
                 >
                   Detalles
                 </button>
                 <button
-                  onClick={()=>loadPost("EDIT", a)}
+                  onClick={() => loadPost("EDIT", a)}
                   className="bg-yellow-400 justify-center rounded-md text-xl m-1 p-2 font-sans"
                 >
                   Editar
                 </button>
                 <button
-                  onClick={()=>loadPost("DELETE", a)}
+                  onClick={() => loadPost("DELETE", a)}
                   className="bg-red-600 justify-center rounded-md text-xl m-1 p-2 font-sans"
                 >
                   Eliminar
@@ -79,8 +76,16 @@ function Home() {
 
   return (
     <Fragment>
-      <header className="justify-center items-center bg-yellow-500 text-2xl p-5 font-sans">
+      <header className="justify-between flex items-center bg-yellow-500 text-2xl p-5 font-sans">
         <h1>Home</h1>
+        <div>
+          <button
+            onClick={() => setCompRender("ADD")}
+            className="bg-yellow-400 justify-center rounded-md text-xl m-1 p-2 font-sans"
+          >
+            Agregar
+          </button>
+        </div>
       </header>
       <main className="justify-center items-center p-2 font-sans">
         {compRender === "HOME" ? (
@@ -94,11 +99,27 @@ function Home() {
             )}
           </ul>
         ) : compRender === "DETAILS" ? (
-          <Details firstLetterUpperCase={firstLetterUpperCase} setCompRender={setCompRender} post={post} />
+          <Details
+            firstLetterUpperCase={firstLetterUpperCase}
+            setCompRender={setCompRender}
+            post={post}
+          />
         ) : compRender === "EDIT" ? (
-          <Edit firstLetterUpperCase={firstLetterUpperCase} setCompRender={setCompRender} post={post} />
+          <Edit
+            firstLetterUpperCase={firstLetterUpperCase}
+            setCompRender={setCompRender}
+            post={post}
+          />
         ) : compRender === "DELETE" ? (
-          <Delete firstLetterUpperCase={firstLetterUpperCase} setCompRender={setCompRender} post={post} />
+          <Delete
+            data={data}
+            setData={setData}
+            firstLetterUpperCase={firstLetterUpperCase}
+            setCompRender={setCompRender}
+            post={post}
+          />
+        ) : compRender === "ADD" ? (
+          <Add setCompRender={setCompRender} />
         ) : (
           ""
         )}
