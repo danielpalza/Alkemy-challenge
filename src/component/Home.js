@@ -20,7 +20,9 @@ function Home() {
   useEffect(() => {
     Fetch("GET")
       .then((res) => res.json())
-      .then((dat) => setData(dat))
+      .then((dat) => {
+        console.log("dat fetch:",dat)
+        setData(dat)})
       .catch("Error");
   }, []);
 
@@ -29,13 +31,15 @@ function Home() {
     setCompRender(comp);
     setPost(post);
   };
+  
 
   //Creates the row of the post, showing only the titles
   useEffect(() => {
+    console.log("useeffect")
     if (data.length > 0) {
       setRows(
         data.map((a) => {
-         return (
+          return (
             <li
               key={a.id}
               className="flex flex-col justify-between md:flex-row bg-yellow-300 justify-center rounded-md items-center m-3 p-2 shadow-md font-sans "
@@ -68,12 +72,13 @@ function Home() {
         })
       );
     }
-  }, [data]);
+  },[data.length]);
 
   //Convert the first letter to upper case
   const firstLetterUpperCase = (str) =>
     str.charAt(0).toUpperCase().concat(str.substring(1, str.length));
 
+    console.log("data: ", data)
   return (
     <Fragment>
       <header className="justify-between flex items-center bg-yellow-500 text-2xl p-5 font-sans">
@@ -119,7 +124,7 @@ function Home() {
             post={post}
           />
         ) : compRender === "ADD" ? (
-          <Add setCompRender={setCompRender} />
+          <Add data={data} setData={setData} setCompRender={setCompRender} />
         ) : (
           ""
         )}

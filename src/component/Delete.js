@@ -9,7 +9,7 @@ const Delete = (prop) => {
       .then((data) => console.log(data))
       .catch("Error delete.");
     prop.setData(prop.data.filter(a=>{
-       return a.id!=prop.post.id
+       return a.id!==prop.post.id
     }))
 
     alert("Post eliminado.")
