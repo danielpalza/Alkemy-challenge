@@ -1,19 +1,27 @@
-async function Fetch(mod, id = "") {
+
+async function Fetch(mod, id = "", body = {}) {
   const urlBase = "https://jsonplaceholder.typicode.com/posts";
   let url;
   let myHeaders = new Headers();
-  let myInit = {
-    method: mod,
-    headers: myHeaders,
-    mode: "cors"
-  };
-  mod === "GET" || mod === "POST" ? url=urlBase: url=`${urlBase}/:${id}`
+  let myInit =
+    mod === "GET"
+      ? {
+          method: mod,
+          headers: myHeaders,
+          mode: "cors",
+        }
+      : {
+          method: mod,
+          headers: myHeaders,
+          mode: "cors",
+          body: JSON.stringify(body),
+        };
+  mod === "GET" || mod === "POST"
+    ? (url = urlBase)
+    : (url = `${urlBase}/${id}`);
   let myRequest = new Request(url, myInit);
-
- 
-  return await fetch(myRequest)
-          
-         
+  console.log("request:", myRequest)
+  return await fetch(myRequest);
 }
 
 export default Fetch;
