@@ -10,7 +10,7 @@ const Add = (prop) => {
   const controllChange = (p) => {
     setPost({ ...post, [p.target.name]: p.target.value });
   };
-
+  //Create a new post with the data, pushit into data and return to Home
   async function addPost() {
     let id = await Fetch("POST")
       .then((res) => res.json())

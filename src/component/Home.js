@@ -58,7 +58,7 @@ function Home() {
           return (
             <li
               key={a.id}
-              className="flex flex-col justify-between md:flex-row bg-yellow-300 justify-center rounded-md items-center m-3 p-2 shadow-md font-sans "
+              className="flex flex-col justify-between md:flex-row bg-yellow-300 justify-center rounded-md items-center m-3 p-2 shadow-md transition-transform transform hover:scale-105   font-sans "
             >
               <h2 className=" text-xl p-2 font-sans">
                 {firstLetterUpperCase(a.title)}
@@ -118,6 +118,12 @@ function Home() {
               className="bg-yellow-300 justify-center  rounded-md text-xl m-1 p-2 font-sans hover:bg-yellow-400 transition-colors"
             >
               Editar
+            </button>
+            <button
+              onClick={() => setCompRender("HOME")}
+              className="bg-yellow-300 justify-center  rounded-md text-xl m-1 p-2 font-sans hover:bg-yellow-400 transition-colors"
+            >
+              Home
             </button>
           </div>
         </div>
