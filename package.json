@@ -37,6 +37,7 @@
     ]
   },
   "devDependencies": {
+    "@babel/plugin-proposal-throw-expressions": "^7.12.13",
     "@tailwindcss/postcss7-compat": "^2.0.4",
     "autoprefixer": "^9.8.6",
     "postcss": "^7.0.35",

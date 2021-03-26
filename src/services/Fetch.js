@@ -1,4 +1,4 @@
-//It makes a request to the API according to the way it will be used, 
+//It makes a request to the API according to the way it will be used,
 //the id (if needed) and / or the body
 async function Fetch(mod, id = "", body = {}) {
   const urlBase = "https://jsonplaceholder.typicode.com/posts";
@@ -20,14 +20,17 @@ async function Fetch(mod, id = "", body = {}) {
           body: JSON.stringify(body),
         };
 
-  //Make the url to use      
-  mod === "GET" || mod === "POST"
+    
+  /*Make the url to use, if the mod is "GET" and there is a "id" pass to fetch,
+   or if the mod is "POST" there gonna be using the urlBase normal, but if there 
+   is a "id", there gonna use a urlBase with the id*/
+  mod === "GET" &&  id.length == 0 || mod === "POST"
     ? (url = urlBase)
-    : (url = `${urlBase}/${id}`);
+    :(url = `${urlBase}/${id}`)
+   
   let myRequest = new Request(url, myInit);
-
-
-  return await fetch(myRequest);
+  console.log("myrequest: ", myRequest)
+  return fetch(myRequest);
 }
 
 export default Fetch;

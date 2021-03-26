@@ -12,7 +12,9 @@ function Home() {
   // Contains the data convert to components of react ready to show
   const [rows, setRows] = useState([]);
   // Is the post who has been selected to do a operation.
-  const [post, setPost] = useState();
+  const [post, setPost] = useState({
+    id:""
+  });
   // It controlles what component has to be showed
   const [compRender, setCompRender] = useState("HOME");
 
@@ -21,7 +23,8 @@ function Home() {
     Fetch("GET")
       .then((res) => res.json())
       .then((dat) => {
-        setData(dat)})
+        setData(dat);
+      })
       .catch("Error");
   }, []);
 
@@ -30,11 +33,25 @@ function Home() {
     setCompRender(comp);
     setPost(post);
   };
-  
+  //Manage the id details request, if no exist, throw error
+  async function manageIdEdit() {
+    if (post.id.length > 0) {
+      await Fetch("GET", post.id)
+        .then((res) => res.json())
+        .then((dat) => loadPost("EDIT", dat))
+        .catch((error) => console.log("error: ",error));
+    } else {
+      alert("Ingrese un valor de Id valido.");
+    }
+  }
+
+  //Manage the changes of text input in the state of post
+  const controllChange = (p) => {
+    setPost({ ...post, [p.target.name]: p.target.value });
+  };
 
   //Creates the row of the post, showing only the titles
   useEffect(() => {
-    
     if (data.length > 0) {
       setRows(
         data.map((a) => {
@@ -61,7 +78,7 @@ function Home() {
                 </button>
                 <button
                   onClick={() => loadPost("DELETE", a)}
-                  className="bg-red-600 justify-center rounded-md text-xl m-1 p-2 font-sans"
+                  className="bg-red-500 justify-center rounded-md text-xl m-1 p-2 font-sans"
                 >
                   Eliminar
                 </button>
@@ -71,24 +88,38 @@ function Home() {
         })
       );
     }
-  },[data.length, data]);
+  }, [data.length, data]);
 
   //Convert the first letter to upper case
   const firstLetterUpperCase = (str) =>
     str.charAt(0).toUpperCase().concat(str.substring(1, str.length));
 
-   
   return (
     <Fragment>
       <header className="justify-between flex items-center bg-yellow-500 text-2xl p-5 font-sans">
-        <h1>Home</h1>
-        <div>
+        <h1 className="text-4xl">Home</h1>
+        <div className="flex">
           <button
             onClick={() => setCompRender("ADD")}
             className="bg-yellow-400 justify-center rounded-md text-xl m-1 p-2 font-sans"
           >
             Agregar
           </button>
+          <div className="flex">
+            <input
+              type="text"
+              name="id"
+              className="p-1 m-3 rounded shadow-md"
+              placeholder="Id"
+              onChange={controllChange}
+            />
+            <button
+              onClick={() => manageIdEdit()}
+              className="bg-yellow-400 justify-center rounded-md text-xl m-1 p-2 font-sans"
+            >
+              Editar
+            </button>
+          </div>
         </div>
       </header>
       <main className="justify-center items-center p-2 font-sans">
@@ -98,7 +129,7 @@ function Home() {
               rows.map((a) => a)
             ) : (
               <li className="justify-center items-center bg-yellow-500 text-lg p-2 font-sans">
-                <h2>Without post for now ...</h2>
+                <h2>Sin posts por ahora...</h2>
               </li>
             )}
           </ul>

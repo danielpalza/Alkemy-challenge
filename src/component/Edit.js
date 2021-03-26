@@ -20,13 +20,13 @@ const Edit = (prop) => {
     await Fetch("PUT", prop.post.id, post)
       .then((res) => res.json())
       .then((dat) => console.log("dat:", dat))
-      .catch("Update error");
+      .catch("Update error");   
     let dat= prop.data.map((a) => a.id == post.id ? post : a )
     prop.setData(dat);
     alert("Post editado");
     prop.setCompRender("HOME");
   }
-
+  console.log("props:", prop)
   //Take the data for edit a old post
   return (
     <div className="m-3 p-2 shadow-md w-full ">
