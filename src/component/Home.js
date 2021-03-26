@@ -33,7 +33,7 @@ function Home() {
     setPost(post);
     setCompRender(comp);
   };
-  //Manage the id details request, if no exist, throw error
+  //Manage the id details request, if it not exist, throw error
   async function manageIdEdit() {
     if (post.id.length > 0) {
       await Fetch("GET", post.id)
