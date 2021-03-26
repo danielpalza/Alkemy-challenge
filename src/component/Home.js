@@ -66,19 +66,19 @@ function Home() {
               <div>
                 <button
                   onClick={() => loadPost("DETAILS", a)}
-                  className="bg-yellow-400 justify-center rounded-md text-xl m-1 p-2 font-sans"
+                  className="bg-yellow-400 justify-center rounded-md text-xl m-1 p-2 font-sans hover:bg-yellow-500 transition-colors"
                 >
                   Detalles
                 </button>
                 <button
                   onClick={() => loadPost("EDIT", a)}
-                  className="bg-yellow-400 justify-center rounded-md text-xl m-1 p-2 font-sans"
+                  className="bg-yellow-400 justify-center rounded-md text-xl m-1 p-2 font-sans hover:bg-yellow-500 transition-colors"
                 >
                   Editar
                 </button>
                 <button
                   onClick={() => loadPost("DELETE", a)}
-                  className="bg-red-500 justify-center rounded-md text-xl m-1 p-2 font-sans"
+                  className="bg-red-500 justify-center rounded-md text-xl m-1 p-2 font-sans hover:bg-red-600 transition-colors"
                 >
                   Eliminar
                 </button>
@@ -96,26 +96,26 @@ function Home() {
 
   return (
     <Fragment>
-      <header className="justify-between flex items-center bg-yellow-500 text-2xl p-5 font-sans">
+      <header className="justify-between flex flex-col sm:flex-row items-center bg-yellow-500 text-2xl p-5 font-sans">
         <h1 className="text-4xl">Home</h1>
-        <div className="flex">
+        <div className="flex flex-col m-1 sm:flex-row w-1/2 justify-center items-center">
           <button
             onClick={() => setCompRender("ADD")}
-            className="bg-yellow-400 justify-center rounded-md text-xl m-1 p-2 font-sans"
+            className="bg-yellow-300 justify-center rounded-md text-xl m-1 p-2 font-sans hover:bg-yellow-400 transition-colors"
           >
             Agregar
           </button>
-          <div className="flex">
+          <div className="flex  items-center ">
             <input
               type="text"
               name="id"
-              className="p-1 m-3 rounded shadow-md"
+              className="p-1 m-3 rounded shadow-md w-1/3 sm:w-auto"
               placeholder="Id"
               onChange={controllChange}
             />
             <button
               onClick={() => manageIdEdit()}
-              className="bg-yellow-400 justify-center rounded-md text-xl m-1 p-2 font-sans"
+              className="bg-yellow-300 justify-center  rounded-md text-xl m-1 p-2 font-sans hover:bg-yellow-400 transition-colors"
             >
               Editar
             </button>

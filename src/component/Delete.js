@@ -27,13 +27,13 @@ const Delete = (prop) => {
         <div className="">
           <button
             onClick={() => deletePost()}
-            className="bg-yellow-400 justify-center rounded-md text-xl m-1 p-2 font-sans"
+            className="bg-yellow-400 justify-center rounded-md text-xl m-1 p-2 font-sans hover:bg-yellow-500 transition-colors"
           >
             Eliminar
           </button>
           <button
             onClick={() => prop.setCompRender("HOME")}
-            className="bg-yellow-400 justify-center rounded-md text-xl m-1 p-2 font-sans"
+            className="bg-yellow-400 justify-center rounded-md text-xl m-1 p-2 font-sans hover:bg-yellow-500 transition-colors"
           >
             Volver
           </button>

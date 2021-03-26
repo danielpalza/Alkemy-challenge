@@ -31,7 +31,7 @@ const Add = (prop) => {
         <h1>Agregar</h1>
         <button
           onClick={() => prop.setCompRender("HOME")}
-          className="bg-yellow-400 justify-center rounded-md text-xl m-1 p-2 font-sans"
+          className="bg-yellow-400 justify-center rounded-md text-xl m-1 p-2 font-sans hover:bg-yellow-500 transition-colors"
         >
           Volver
         </button>
