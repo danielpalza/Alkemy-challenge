@@ -13,7 +13,7 @@ function Home() {
   const [rows, setRows] = useState([]);
   // Is the post who has been selected to do a operation.
   const [post, setPost] = useState({
-    id:""
+    id: "",
   });
   // It controlles what component has to be showed
   const [compRender, setCompRender] = useState("HOME");
@@ -30,16 +30,24 @@ function Home() {
 
   // Receives if a diferent component has to be showed, and load the post to use
   const loadPost = (comp, post) => {
-    setCompRender(comp);
     setPost(post);
+    setCompRender(comp);
   };
   //Manage the id details request, if no exist, throw error
   async function manageIdEdit() {
     if (post.id.length > 0) {
       await Fetch("GET", post.id)
-        .then((res) => res.json())
+        .then((res) => {
+          if (!res.ok) {
+            throw "El id no existe."
+          }
+          return res.json();
+        })
         .then((dat) => loadPost("EDIT", dat))
-        .catch((error) => console.log("error: ",error));
+        .catch((err) => {
+          alert(err);
+          
+        });
     } else {
       alert("Ingrese un valor de Id valido.");
     }
@@ -58,7 +66,7 @@ function Home() {
           return (
             <li
               key={a.id}
-              className="flex flex-col justify-between md:flex-row bg-yellow-300 justify-center rounded-md items-center m-3 p-2 shadow-md transition-transform transform hover:scale-105   font-sans "
+              className="flex flex-col justify-between md:flex-row bg-yellow-300 justify-center rounded-md items-center m-3 p-2 shadow-md transition-transform transform hover:scale-105  font-sans "
             >
               <h2 className=" text-xl p-2 font-sans">
                 {firstLetterUpperCase(a.title)}

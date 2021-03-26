@@ -29,7 +29,6 @@ async function Fetch(mod, id = "", body = {}) {
     :(url = `${urlBase}/${id}`)
    
   let myRequest = new Request(url, myInit);
-  console.log("myrequest: ", myRequest)
   return fetch(myRequest);
 }
 

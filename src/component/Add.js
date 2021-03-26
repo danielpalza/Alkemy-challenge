@@ -10,18 +10,23 @@ const Add = (prop) => {
   const controllChange = (p) => {
     setPost({ ...post, [p.target.name]: p.target.value });
   };
-  //Create a new post with the data, pushit into data and return to Home
+  
+  //Create a new post with the data, if this exist, and then make a request and return to Home
   async function addPost() {
-    let id = await Fetch("POST")
-      .then((res) => res.json())
-      .then((dat) => dat.id)
-      .catch("Create error");
+    if (Object.values(post).every((a) => a.length > 0)) {
+      let id = await Fetch("POST")
+        .then((res) => res.json())
+        .then((dat) => dat.id)
+        .catch("Create error");
 
-    let data = prop.data;
-    data.unshift({ ...post, id })
-    prop.setData(data);
-    alert("Post creado");
-    prop.setCompRender("HOME");
+      let data = prop.data;
+      data.unshift({ ...post, id });
+      prop.setData(data);
+      alert("Post creado");
+      prop.setCompRender("HOME");
+    } else {
+      alert("Por favor complete los campos");
+    }
   }
 
   //Take the data for make a new post

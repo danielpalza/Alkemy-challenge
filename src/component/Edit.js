@@ -6,27 +6,31 @@ const Edit = (prop) => {
     title: "",
     body: "",
     id: prop.post.id,
-    userId: prop.post.userId
+    userId: prop.post.userId,
   });
 
   //Manage the changes of text input in the state of post
   const controllChange = (p) => {
     setPost({ ...post, [p.target.name]: p.target.value });
   };
-  
-  //Make the fetch and update with new post data, set it to "data" from Home y return the view
-  //to it
+
+  /*Make the fetch and update with new post data, set it to "data" from Home y return the view
+  to it*/
   async function editPost() {
-    await Fetch("PUT", prop.post.id, post)
-      .then((res) => res.json())
-      .then((dat) => console.log("dat:", dat))
-      .catch("Update error");   
-    let dat= prop.data.map((a) => a.id == post.id ? post : a )
-    prop.setData(dat);
-    alert("Post editado");
-    prop.setCompRender("HOME");
+    if (Object.values(post).every((a) => String(a).length > 0)) {
+      await Fetch("PUT", prop.post.id, post)
+        .then((res) => res.json())
+        .then((dat) => console.log("dat:", dat))
+        .catch("Update error");
+      let dat = prop.data.map((a) => (a.id == post.id ? post : a));
+      prop.setData(dat);
+      alert("Post editado");
+      prop.setCompRender("HOME");
+    } else {
+      alert("Por favor complete los campos.");
+    }
   }
-  console.log("props:", prop)
+
   //Take the data for edit a old post
   return (
     <div className="m-3 p-2 shadow-md w-full ">
